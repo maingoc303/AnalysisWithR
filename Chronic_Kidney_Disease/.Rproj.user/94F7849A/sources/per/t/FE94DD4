@@ -1,0 +1,27 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1565095588432.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1410958431",
+    "id" : "FE94DD4",
+    "lastKnownWriteTime" : 1565099774,
+    "last_content_update" : 1565099774309,
+    "path" : "~/Desktop/Git_Projects/AnalysisWithR/Chronic_Kidney_Disease/Descriptive_Analysis.Rmd",
+    "project_path" : "Descriptive_Analysis.Rmd",
+    "properties" : {
+        "cursorPosition" : "4,3",
+        "last_setup_crc32" : "4A2E4F33db67f8d2",
+        "scrollLine" : "3",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

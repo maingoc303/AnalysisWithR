@@ -1,0 +1,40 @@
+{
+  source("R_Code.R")
+}
+
+# visualize proportion of missing values of dataframe filtered above
+missing_values = bar_missing(df)
+
+# overview about quantitative variables by each symptom
+hypertension = df %>% gather(c(Age,BP,SPG, BUrea:BGlu),
+              key="Parameter",
+              value="Value")%>%
+  ggplot(aes(x=Value,fill=HTA))+
+  geom_density(alpha=0.5)+
+  ggtitle("Hypertension")+
+  facet_wrap(~Parameter,ncol=2,scales="free")+
+  scale_fill_manual(values = c("blue","red"))+
+  my_theme()
+
+# chronic kidney disease
+chronic = df %>% gather(c(Age,BP,SPG, BUrea:BGlu),
+                        key="Parameter",
+                        value="Value")%>%
+  ggplot(aes(x=Value,fill=CKD))+
+  geom_density(alpha=0.5)+
+  ggtitle("Chronic kidney disease")+
+  facet_wrap(~Parameter,ncol=2,scales="free")+
+  scale_fill_manual(values = c("blue","red"))+
+  my_theme()
+
+# diabetes
+diabete = df %>% gather(c(Age,BP,SPG, BUrea:BGlu),
+                        key="Parameter",
+                        value="Value")%>%
+  ggplot(aes(x=Value,fill=DIA))+
+  geom_density(alpha=0.5)+
+  ggtitle("Diabetes")+
+  facet_wrap(~Parameter,ncol=2,scales="free")+
+  scale_fill_manual(values = c("blue","red"))+
+  my_theme()
+

@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1565098056920.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1367132385",
+    "id" : "D6CB432B",
+    "lastKnownWriteTime" : 1565098487,
+    "last_content_update" : 1565098487399,
+    "path" : "~/Desktop/Git_Projects/AnalysisWithR/Chronic_Kidney_Disease/cluster_explore.R",
+    "project_path" : "cluster_explore.R",
+    "properties" : {
+        "cursorPosition" : "23,0",
+        "scrollLine" : "11",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

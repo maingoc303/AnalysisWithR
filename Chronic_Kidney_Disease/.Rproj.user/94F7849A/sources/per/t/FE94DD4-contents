@@ -1,0 +1,52 @@
+---
+title: "Descriptive_Analysis"
+output: html_document
+toc: 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+# load R source
+{
+  source("R_Code.R")
+  source("descriptive.R")
+  source("cluster_analysis.R")
+  source("cluster_explore.R")
+}
+```
+## Dataset description
+
+
+## Overview about selected predictors
+
+#### Missing values
+
+```{r visualize missing, echo=F}
+missing_values
+```
+
+## Descriptive distribution of predictors by symptom
+
+Write something here
+
+```{r hypertension, echo=FALSE, warning=F}
+hypertension
+```
+
+Write something here
+
+```{r chronic kidney disease, echo=FALSE, warning=F}
+chronic
+```
+
+
+Write something here
+
+```{r diabetes, echo=FALSE, warning=F}
+diabete
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r distribution by cluster, echo=F}
+dist_3D
+```

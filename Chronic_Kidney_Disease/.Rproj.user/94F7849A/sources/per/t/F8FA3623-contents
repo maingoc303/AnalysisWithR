@@ -1,0 +1,116 @@
+getwd()
+files=list.files("data/")
+
+# library
+library(tidyverse)
+library(devtools)
+
+# set up a theme for visualization
+my_theme <- function(base_size = 10, base_family = "sans"){
+  theme_minimal(base_size = base_size, base_family = base_family) +
+    theme(
+      axis.text = element_text(size = 10),
+      axis.text.x = element_text(angle = 0, vjust = 0.5, hjust = 0.5),
+      axis.title = element_text(size = 10),
+      panel.grid.major = element_line(color = "gray"),
+      panel.grid.minor = element_blank(),
+      panel.background = element_rect(fill = "#f7fdff"),
+      strip.background = element_rect(fill = "#001d60", color = "#00113a", size =0.5),
+      strip.text = element_text(face = "bold", size = 10, color = "white"),
+      legend.position = "bottom",
+      legend.justification = "center",
+      legend.background = element_blank(),
+      panel.border = element_rect(color = "grey5", fill = NA, size = 0.5)
+    )
+}
+
+theme_set(my_theme())
+clust_colmap = c("#f7286d","#1faae0","#ffbf1f")
+
+# load data
+{
+  ckd=read.csv(paste("data/",files[2],sep=""),
+               header=F,
+               comment.char="@",
+               na.strings=c("?","","\t?"),)
+  
+  names(ckd)=c("Age","BP","SPG","Albumin",
+               "Sugar","RBC","PC",
+               "PCC","Bact","BGlu",
+               "BUrea","SerCreat",
+               "Sodium","K","Hb",
+               "PCV","WBC","RBCCount",
+               "HTA","DIA","CAD",
+               "APP","PedEdema",
+               "Anemia","CKD")
+}
+# format data column
+{ 
+  ckd$DIA=recode_factor(ckd$DIA,
+                        `yes`="TRUE",
+                        `no`="FALSE",
+                        `\tno`="FALSE",
+                        `\tyes`="TRUE",
+                        ` yes`="TRUE")%>%as.logical()
+  
+  ckd$CKD=recode_factor(ckd$CKD,
+                        `ckd`="TRUE",
+                        `no`="FALSE",
+                        `ckd\t`="TRUE",
+                        `notckd`="FALSE")%>%as.logical()
+  
+  ckd$HTA=recode_factor(ckd$HTA,
+                        `yes`="TRUE",
+                        `no`="FALSE")%>%as.logical()
+  
+  ckd$Age=recode_factor(ckd$Age,
+                        `notckd`="NA")%>%as.numeric()
+}
+
+# filter dataset for analysis
+{
+  df=select(ckd,c(Age,BP,RBCCount,SPG,Albumin,Sugar,PC,PCC,Bact,BGlu,BUrea,
+                  SerCreat,Sodium,K,Hb,PCV,WBC,Anemia,PedEdema,DIA,
+                  HTA,CKD))
+  
+  df=subset(df,DIA!="NA" & HTA!="NA" & CKD!="NA")%>%as_tibble()
+  
+  df$BP=as.numeric(df$BP)
+  df$BGlu=as.numeric(df$BGlu)
+  df$PCV=as.numeric(df$PCV)
+  df$WBC=as.numeric(df$WBC)
+  df$Albumin = as.factor(df$Albumin)
+  df$Sugar= as.factor(df$Sugar)
+  
+  # remove the original dataset
+  rm(ckd)
+}
+
+# function to get the overview about missing values 
+# for each variable in the dataset
+{
+  bar_missing <- function(x){
+    require(reshape2)
+    x %>%
+      is.na %>%
+      melt %>%
+      ggplot(data = .,
+             aes(x = Var2)) +
+      geom_bar(aes(y=(..count..),fill=value),alpha=0.7)+
+      scale_fill_manual(values=c("skyblue","red"),
+                        name = "",
+                        labels = c("Available","Missing"))+
+      theme_minimal()+
+      theme(axis.text.x = element_text(angle=45, vjust=0.5)) +
+      labs(x = "Variables in Dataset",
+           y = "Observations")+coord_flip()
+  }
+}
+
+df %>% select(CKD,HTA,DIA,
+              Age,BP,
+              Bact,PCC,Anemia,PedEdema,
+              SPG,Albumin,Sugar,BUrea,SerCreat,BGlu) %>%na.omit() -> df1
+
+#str(df1)
+

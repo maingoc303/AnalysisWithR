@@ -1,0 +1,31 @@
+{
+  source("R_Code.R")
+  source("descriptive.R")
+  source("cluster_analysis.R")
+}
+
+valid_df = df1 %>% mutate(Cluster = as.factor( kpres_4$cluster))
+
+dist_by_clust = valid_df %>%gather(Age,BP,SPG,BGlu,BUrea,SerCreat,
+                   key = "Para",value="Value")%>%
+  ggplot(aes(x=Value, fill = Cluster))+
+  geom_density(alpha=0.5,col="black")+
+  facet_wrap(~Para,ncol=2,scales = "free")+
+  scale_fill_manual(values=clust_colmap )
+
+box_plot_clust = valid_df %>%gather(Age,BP,SPG,BGlu,BUrea,SerCreat, 
+                                    key = "Para",value="Value")%>%
+  ggplot(aes(x = Cluster, y=Value, fill = Cluster))+
+  geom_boxplot(alpha=0.5,col="black")+
+  facet_wrap(~Para,ncol=2,scales = "free")+
+  coord_flip()+
+  scale_fill_manual(values=clust_colmap )
+
+dist_3D = valid_df %>% ggplot(aes(x=Age,y=BP))+
+  stat_density2d(geom="polygon",
+                 aes(fill=Cluster,
+                     col = Cluster,
+                     alpha = ..level..))+
+  geom_jitter(color="black",size=2, alpha = 0.3)+
+  scale_fill_manual(values=clust_colmap)+
+  scale_color_manual(values=clust_colmap)
